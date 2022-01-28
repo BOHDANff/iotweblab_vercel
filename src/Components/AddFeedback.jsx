@@ -23,10 +23,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'center',
     },
-    form: {
-        minHeight: '100%'
-    }
-
 }))
 
 const schema = yup.object().shape({
@@ -63,9 +59,13 @@ export default function AddFeedback() {
         reset()
     }
     return (isLogin
-            ? <Container className={styles.root} maxWidth={'xs'}>
-                <h1 className={styles.title}>Add your feedback</h1>
-                <Form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+            ? <Container style={{
+                minHeight: '80vh',
+                display: 'flex',
+                flexDirection: 'column',
+            }} maxWidth={'xs'}>
+                <h1 style={{textAlign: 'center',}}>Add your feedback</h1>
+                <Form onSubmit={handleSubmit(onSubmit)}>
                     <Input
                         {...register('author')}
                         id={'author'}
@@ -111,7 +111,7 @@ export default function AddFeedback() {
                     <FormButton>Send feedback</FormButton>
                 </Form>
             </Container>
-            : <h1 className={styles.title}>Please login to add your feedback</h1>
+            : <h1 style={{textAlign: 'center',}}>Please login to add your feedback</h1>
 
     )
 }

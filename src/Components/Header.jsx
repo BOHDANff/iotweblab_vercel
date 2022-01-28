@@ -55,7 +55,12 @@ export default function Header() {
     const [loginOrRegister, setLoginOrRegister] = useState('login')
     const {isLogin, logout} = useAuthContext()
     return (
-        <div className={classes.root}>
+        <div style={{
+            minHeight: '100vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+        }}>
 
             <AppBar>
                 <Container>
@@ -78,8 +83,17 @@ export default function Header() {
 
             <Collapse in={collapsed}
                       {...( collapsed ? {timeout: 1000} : {} )}>
-                <div className={classes.centeralInfoWrapper}>
-                    <div className={classes.centeralInfoText}>
+                <div style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                }}>
+                    <div style={{
+                        fontSize: '30px',
+                        fontWeight: '500',
+                        textAlign: 'center',
+                        marginBottom: '30px',
+                    }}>
                         We are ready to help you <br/> to digitalyze your business
                     </div>
                     <CentralButton size='large' variant="outlined" onClick={handleContactOpen}>Contact us</CentralButton>
