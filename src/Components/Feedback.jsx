@@ -86,7 +86,7 @@ export default function Feedback() {
                 <Grid container spacing={2} className={classes.root1}>
                     <Grid className={classes.cardItem} item xs={12}>
                         {isFetching
-                            ? <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column'}}><LinearProgress/></Box>
+                            ? <h1> Fetching </h1>
                             : <Slider props={feedbacksCardArr}/>}
                     </Grid>
                 </Grid>
