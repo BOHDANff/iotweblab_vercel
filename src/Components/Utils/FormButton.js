@@ -17,7 +17,6 @@ export const FormButton = ({ children, ...props }) => {
             fullWidth
             variant="contained"
             color="primary"
-            className={styles.root}
             {...props}
         >
             {children}
