@@ -18,6 +18,7 @@ export const FormButton = ({ children, ...props }) => {
             variant="contained"
             color="primary"
             {...props}
+            style={{margin: "20px 0 20px"}}
         >
             {children}
         </Button>
