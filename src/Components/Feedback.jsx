@@ -1,4 +1,4 @@
-import {Container, Grid} from "@mui/material";
+import {Container, Grid, LinearProgress} from "@mui/material";
 import {makeStyles} from "@mui/styles";
 import {Slider} from "./Utils/Slider";
 import {FdbkCard} from "./Utils/FdbkCard";
@@ -7,8 +7,7 @@ import FeedbackService from "../API/FeedbackService";
 import {FeedbackProvider} from "./Context/FeedbackContext";
 import AddFeedback from "./AddFeedback";
 import BasicModal from "./Utils/Modal";
-import {Box, LinearProgress} from "@material-ui/core";
-
+import Box from "@mui/material/Box";
 const useStyles = makeStyles(() => ({
     root1: {
         minHeight: '70vh',
@@ -86,7 +85,7 @@ export default function Feedback() {
                 <Grid container spacing={2} className={classes.root1}>
                     <Grid className={classes.cardItem} item xs={12}>
                         {isFetching
-                            ? <h1> Fetching </h1>
+                            ? <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column'}}><LinearProgress/></Box>
                             : <Slider props={feedbacksCardArr}/>}
                     </Grid>
                 </Grid>
