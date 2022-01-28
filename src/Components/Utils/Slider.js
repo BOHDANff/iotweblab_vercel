@@ -7,7 +7,7 @@ import 'swiper/css/pagination';
 import 'swiper/css/scrollbar';
 
 export const Slider = (props) => {
-    const slides = props.props.map((el, i) => <SwiperSlide key={i} style={{display: "flex", justifyContent: "center"}}>{el}</SwiperSlide>);
+    const slides = props.props.map((el, i) => <SwiperSlide key={i} style={{display: "flex", justifyContent: "center", alignItems: 'center'}}>{el}</SwiperSlide>);
     return (
         <Swiper
             // install Swiper modules

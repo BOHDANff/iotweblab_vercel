@@ -20,7 +20,8 @@ export const FdbkCard = (props) => {
             justifyContent: "space-between",
             maxWidth: "300px",
             minWidth: "250px",
-            maxHeight: "400px"
+            maxHeight: "400px",
+            minHeight: "300px"
         }}>
             <CardHeader
                 avatar={
