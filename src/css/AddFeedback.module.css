@@ -1,0 +1,8 @@
+.title {
+    text-align: center;
+}
+.root{
+    min-height: 80vh;
+    display: flex;
+    flex-direction: column;
+}

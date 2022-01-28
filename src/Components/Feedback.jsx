@@ -7,16 +7,18 @@ import FeedbackService from "../API/FeedbackService";
 import {FeedbackProvider} from "./Context/FeedbackContext";
 import AddFeedback from "./AddFeedback";
 import BasicModal from "./Utils/Modal";
+import {Box, LinearProgress} from "@material-ui/core";
 
 const useStyles = makeStyles(() => ({
-    root: {
-        // display: 'flex',
-        minHeight: '100vh',
+    root1: {
+        minHeight: '70vh',
+        marginBottom: '100px'
     },
     title: {
-        marginTop: '80px',
-        marginBottom: '5%',
+        margin: '80px 0 0px',
         textAlign: 'center',
+        display: 'flex',
+        justifyContent: 'center',
     },
     cardItem: {
         display: 'flex',
@@ -25,22 +27,23 @@ const useStyles = makeStyles(() => ({
 }))
 export default function Feedback() {
     const classes = useStyles()
-
+    const [isFetching, setIsFetching] = useState(false)
     const [feedbacks, setFeedbacks] = useState([])
     const [adminMessage, setAdminMessage] = useState(null)
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
 
-
     useEffect(() => {
         fetchFeedbacks()
     }, [])
 
     async function fetchFeedbacks() {
+        setIsFetching(true)
         await FeedbackService.getAll().then((res) => {
             setFeedbacks(res)
             console.log(res.length)
+            setIsFetching(false)
         })
     }
 
@@ -59,17 +62,17 @@ export default function Feedback() {
 
     const createFeedback = useCallback(async (newFeedback, token) => {
         await FeedbackService.create(newFeedback, token).then((res) => {
-            if (!res.data) {
-                setFeedbacks([...feedbacks, res])
-                console.log([...feedbacks, res].length)
-            }
+                if (!res.data) {
+                    setFeedbacks([...feedbacks, res])
+                    console.log([...feedbacks, res].length)
+                }
             }
         )
     }, [feedbacks])
 
     //useCallback
     const feedbacksCardArr = feedbacks.map(el => {
-       return (<FdbkCard title={el.author} description={el.description} date={el.date} img={'logo.svg'} id={el._id}/>)
+        return (<FdbkCard title={el.author} description={el.description} date={el.date} img={'logo.svg'} id={el._id}/>)
     })
 
     return (
@@ -79,14 +82,13 @@ export default function Feedback() {
         }}>
             <BasicModal open={open} onClose={handleClose}>{adminMessage}</BasicModal>
             <Container>
-                <Grid container spacing={2} className={classes.root}>
-                    <Grid item xs={12}>
-                        <h1 className={classes.title}>Feedback from our clients</h1>
-                    </Grid>
+                <h1 className={classes.title}>Feedback from our clients</h1>
+                <Grid container spacing={2} className={classes.root1}>
                     <Grid className={classes.cardItem} item xs={12}>
-                        <Slider props={feedbacksCardArr}/>
+                        {isFetching
+                            ? <Box sx={{width: '100%', display: 'flex', justifyContent: 'center', flexDirection: 'column'}}><LinearProgress/></Box>
+                            : <Slider props={feedbacksCardArr}/>}
                     </Grid>
-                    <Grid item xs={12}></Grid>
                 </Grid>
             </Container>
             <AddFeedback/>

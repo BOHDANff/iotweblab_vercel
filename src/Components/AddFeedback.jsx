@@ -9,21 +9,9 @@ import "yup-phone";
 import {yupResolver} from "@hookform/resolvers/yup";
 import {useFeedback} from "./Context/FeedbackContext";
 import {useAuthContext} from "./Context/AuthContext";
-
-const useStyles = makeStyles((theme) => ({
-    title: {
-        textAlign: 'center',
-    },
-    root: {
-        minHeight: '80vh',
-        display: 'flex',
-        flexDirection: 'column',
-    },
-    gridItem: {
-        display: 'flex',
-        justifyContent: 'center',
-    },
-}))
+import styles from '../css/AddFeedback.module.css'
+import {useState} from "react";
+import BasicModal from "./Utils/Modal";
 
 const schema = yup.object().shape({
     author: yup
@@ -45,26 +33,30 @@ const schema = yup.object().shape({
 
 
 export default function AddFeedback() {
-    const styles = useStyles()
     const {register, handleSubmit, formState:{errors}, reset} = useForm({
         mode: "onChange",
         resolver: yupResolver(schema),
     })
-
+    const [open, setOpen] = useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const {createFeedback} = useFeedback()
+    const [userMessage, setUserMessage] = useState(null)
     const {isLogin, token} = useAuthContext()
     const onSubmit = async (newFeedback) => {
-        await createFeedback(newFeedback, token)
-        console.log(newFeedback)
+        if(isLogin) {
+            await createFeedback(newFeedback, token)
+            console.log(newFeedback)
+        } else {
+            setUserMessage("Only authorized users can add feedbacks. Please log in to add your feedback")
+            handleOpen()
+        }
         reset()
     }
-    return (isLogin
-            ? <Container style={{
-                minHeight: '80vh',
-                display: 'flex',
-                flexDirection: 'column',
-            }} maxWidth={'xs'}>
-                <h1 style={{textAlign: 'center',}}>Add your feedback</h1>
+    return (
+        <><BasicModal open={open} onClose={handleClose}>{userMessage}</BasicModal>
+            <Container className={styles.root} maxWidth={'xs'}>
+                <h1 className={styles.title}>Add your feedback</h1>
                 <Form onSubmit={handleSubmit(onSubmit)}>
                     <Input
                         {...register('author')}
@@ -110,8 +102,6 @@ export default function AddFeedback() {
                     />
                     <FormButton>Send feedback</FormButton>
                 </Form>
-            </Container>
-            : <h1 style={{textAlign: 'center',}}>Please login to add your feedback</h1>
-
+            </Container></>
     )
 }
