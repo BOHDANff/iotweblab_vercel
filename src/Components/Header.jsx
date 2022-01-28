@@ -41,7 +41,7 @@ const CentralButton = styled(Button)(({ theme }) => ({
 
 
 export default function Header() {
-    const classes = useStyles()
+    const styles = useStyles()
     const [collapsed, setCollapsed] = useState(false)
     useEffect( () => {
         setCollapsed(true)
@@ -60,6 +60,7 @@ export default function Header() {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: 'white',
         }}>
 
             <AppBar>
